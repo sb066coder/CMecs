@@ -1,12 +1,14 @@
 package ru.sb066coder
 
-class Velocity (_vector: Vector = Vector(0.0), _speed: Double = 0.0) {
-    var vector: Vector = _vector
-    var speed: Double = _speed
+import kotlin.math.cos
+import kotlin.math.pow
+import kotlin.math.sin
+import kotlin.math.sqrt
 
-    fun getXShift(forces: Array<Force>, mass: Double): Double =
-        (vector.x * speed + forces.fold(0.0) { acc, force -> acc + force.vector.x * force.amount / mass }) * TIME_STEP
+class Velocity (alpha: Double = 0.0, beta: Double = 0.0, _speed: Double = 0.0) {
+    var xComp: Double = _speed * cos(beta) * cos(alpha)
+    var yComp: Double = _speed * cos(beta) * sin(alpha)
+    var zComp: Double = _speed * sin(beta)
 
-    fun getYShift(forces: Array<Force>, mass: Double): Double =
-        (vector.y * speed + forces.fold(0.0) { acc, force -> acc + force.vector.y * force.amount / mass  }) * TIME_STEP
+    fun getSpeed(): Double = sqrt(xComp * xComp + yComp * yComp + zComp * zComp)
 }
